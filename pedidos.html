@@ -54,13 +54,19 @@
                                 class="bi bi-trash"></i></button>
                     </div>
                     <div class="col-auto d-flex align-items-end">
-                        <button type="button" id="datos" class="btn btn-secondary"><i class="bi bi-arrow-down"></i></button>
+                        <button type="button" id="datos" class="btn btn-secondary"><i
+                                class="bi bi-arrow-down"></i></button>
                     </div>
                 </form>
-                <table id="example" class="display" style="width:100%">
+                <table id="ordenes" class="display" style="width:100%">
 
                 </table>
             </container>
+            <card>
+                <table id="procesada" class="display" style="width:100%">
+
+                </table>
+            </card>
         </main>
 
     </div>
@@ -75,7 +81,7 @@
 
 
         fetch('./pedidos/pedidos2.json').then(res => res.json()).then(resultado => {
-            new DataTable('#example', {
+            new DataTable('#ordenes', {
                 paging: false,
                 scrollY: 500,
                 data: resultado,
@@ -90,8 +96,6 @@
                         rows: ""
                     }
                 },
-
-
 
                 columns: [
                     {
@@ -170,7 +174,7 @@
             // --------------- filtros de fecha ------------------------------
 
 
-            var table = $('#example').DataTable();
+            var table = $('#ordenes').DataTable();
             $('#min, #max').change(function () {
                 $.fn.dataTable.ext.search.push(
                     function (settings, data, dataIndex) {
@@ -228,18 +232,10 @@
 
             });
 
-
-            /*-------------------  Obtener Datos Seleccionados ---------------- */
-
-            $('#datos').on('click', function () {
-                var data = table.rows({ selected: true }).data().toArray();
-                console.log(data)
-            })
-
             // --------------- Check Box group ------------------------------
 
             // Handle click event on group checkbox
-            $('#example').on('click', '.group-checkbox', function (e) {
+            $('#ordenes').on('click', '.group-checkbox', function (e) {
                 // Get group class name
                 var groupName = $(this).data('group-name');
 
@@ -256,20 +252,74 @@
                 }, 0);
             });
 
-            // let ordenes = table
-            //     .columns(1)
-            //     .data()
-            //     .eq(0)      // Reduce the 2D array into a 1D array of data
-            //     .sort()       // Sort data alphabetically
-            //     .unique()  // Reduce the 2D array into a 1D array of data
-            //     $('.dataTables_info').append("<span> Total de Ordenes " + ordenes.length + "</span>")
 
 
 
+            /*-------------------  Obtener Datos Seleccionados ---------------- */
+
+            $('#datos').on('click', function () {
+                var data = table.rows({ selected: true }).data().toArray();
+                
+                new DataTable('#procesada', {
+                    paging: false,
+                    scrollY: 500,
+                    info: false,
+                    data: data,
+                    sort: false,
+
+
+                    columns: [
+                        {
+                            title: "Comprobante",
+                            data: "comprobante"
+                        },
+                        {
+                            title: "Cliente",
+                            data: "cliente"
+                        },
+                        {
+                            title: "Codigo",
+                            data: "cod_articulo"
+                        },
+                        {
+                            title: "Articulo",
+                            data: "articulo"
+                        },
+                        {
+                            title: "Fecha",
+                            data: "fecha_aprob",
+                            render: {
+                                display: function (data, type, row) {
+                                    return data.slice(0, 10).split('-').reverse().join('/')
+                                },
+                                sort: function (data, type, row) {
+                                    return new Date(data).getTime()
+                                }
+                            }
+                        },
+                        {
+                            title: "Riesgo",
+                            data: "riesgo"
+                        },
+                        {
+                            title: "Cantidad",
+                            data: "liberados"
+                        },
+
+                    ],
+                    rowGroup: {
+                        dataSrc: 'comprobante',
+                        startRender: function (rows, group) {
+                            // Assign class name to all child rows
+                             return '<label>Número de Orden ' + group + ' (' + rows.count() + ')</label>';
+                        }
+                    },
+                })
 
         })
 
 
+        })
 
 
 
