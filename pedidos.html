@@ -1,0 +1,286 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos Miniload Godoy Poviña</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" href="DataTables/DataTables-1.11.3/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="./DataTables/datatables.css">
+    <link rel="stylesheet" href="css/bootstrap-icons.css">
+    <script src="DataTables/datatables.min.js"></script>
+    <link type="text/css" href="./DataTables/dataTables.checkboxes.css" rel="stylesheet" />
+    <script type="text/javascript" src="DataTables/dataTables.checkboxes.min.js"></script>
+
+
+
+
+</head>
+
+<body>
+
+    <div class="contenedor" id="contenedor" style="height: 900px;">
+        <main class="contenedor__principal">
+            <h2>Lista de Pedidos</h2>
+            <container>
+                <p>Filtros</p>
+                <form class="row g-3">
+                    <div class="col-auto">
+                        <label>Fecha desde:</label> <input type="date" id="min" name="minimo"
+                            class="form-control form-control-sm" value="">
+                    </div>
+                    <div class="col-auto">
+                        <label>Fecha hasta:</label> <input type="date" id="max" name="maximo"
+                            class="form-control form-control-sm">
+                    </div>
+                    <div class="col-auto">
+                        <label>Riesgo:</label>
+                        <select id="filter-riesgo" class="form-control form-control-sm">
+                            <option value="" selected="selected">Todos</option>
+                            <option>A</option>
+                            <option>B</option>
+                            <option>C</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <label>Cliente:</label>
+                        <select id="filter-cliente" class="form-control form-control-sm">
+                            <option value="" selected="selected">Todos</option>
+                        </select>
+                    </div>
+                    <div class="col-auto d-flex align-items-end">
+                        <button type="button" id="borrar-filtros" class="btn btn-secondary"><i
+                                class="bi bi-trash"></i></button>
+                    </div>
+                    <div class="col-auto d-flex align-items-end">
+                        <button type="button" id="datos" class="btn btn-secondary"><i class="bi bi-arrow-down"></i></button>
+                    </div>
+                </form>
+                <table id="example" class="display" style="width:100%">
+
+                </table>
+            </container>
+        </main>
+
+    </div>
+
+
+
+    <script>
+        // http://192.168.200.117:8080/pedidos
+
+        let mesAtras = `${(new Date(Date.now()).getFullYear())}-${(new Date(Date.now() - 30).getMonth()).toString().padStart(2, 0)}-01`
+        $('#min').val(mesAtras)
+
+
+        fetch('./pedidos/pedidos2.json').then(res => res.json()).then(resultado => {
+            new DataTable('#example', {
+                paging: false,
+                scrollY: 500,
+                data: resultado,
+                info: true,
+                infoCallback: function (settings, start, end, max, total, pre) {
+                    return 'Total de Artículos ' + total + " de " + max;
+                },
+                language: {
+                    info: 'Mostrando  _END_  de _TOTAL_ ',
+                    infoFiltered: 'filtrado de  _MAX_ ',
+                    select: {
+                        rows: ""
+                    }
+                },
+
+
+
+                columns: [
+                    {
+                        'data': 'comprobante',
+                        'checkboxes': {
+                            'selectRow': true
+                        }
+                    },
+                    {
+                        title: "Comprobante",
+                        data: "comprobante"
+                    },
+                    {
+                        title: "Cliente",
+                        data: "cliente"
+                    },
+                    {
+                        title: "Codigo",
+                        data: "cod_articulo"
+                    },
+                    {
+                        title: "Articulo",
+                        data: "articulo"
+                    },
+                    {
+                        title: "Fecha",
+                        data: "fecha_aprob",
+                        render: {
+                            display: function (data, type, row) {
+                                return data.slice(0, 10).split('-').reverse().join('/')
+                            },
+                            sort: function (data, type, row) {
+                                return new Date(data).getTime()
+                            }
+                        }
+                    },
+                    {
+                        title: "Riesgo",
+                        data: "riesgo"
+                    },
+                    {
+                        title: "Cantidad",
+                        data: "liberados"
+                    },
+
+                ],
+                rowGroup: {
+                    dataSrc: 'comprobante',
+                    startRender: function (rows, group) {
+                        // Assign class name to all child rows
+                        var groupName = 'group-' + group.toString().replace(/[^A-Za-z0-9]/g, '');
+                        var rowNodes = rows.nodes();
+                        rowNodes.to$().addClass(groupName);
+
+                        // Get selected checkboxes
+                        var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        // Parent checkbox is selected when all child checkboxes are selected
+                        var isSelected = (checkboxesSelected.length == rowNodes.length);
+
+                        return '<label><input type="checkbox" class="group-checkbox" data-group-name="'
+                            + groupName + '"' + (isSelected ? ' checked' : '') + '> Número de Orden ' + group + ' (' + rows.count() + ')</label>';
+                    }
+                },
+                select: {
+                    style: 'multi'
+                },
+
+
+
+
+            });
+
+
+
+
+            // --------------- filtros de fecha ------------------------------
+
+
+            var table = $('#example').DataTable();
+            $('#min, #max').change(function () {
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        let timeOffset = new Date(document.getElementById("min").value).getTimezoneOffset() * 60000
+                        let minim = (new Date(document.getElementById("min").value).getTime() + timeOffset) / 1000
+                        let maxim = (new Date(document.getElementById("max").value).getTime() + timeOffset) / 1000
+                        let date = new Date((data[4]).split('/').reverse).getTime() / 1000
+
+                        if ((minim <= date && isNaN(maxim))
+                            || (minim <= date && maxim >= date)) {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
+
+                $(document).ready(function () {
+                    table.draw();
+                });
+            })
+
+            /*-------------------  fin de filtro fecha ---------------- */
+
+            /*-------------------  filtro riesgo ---------------- */
+            $('#filter-riesgo').on('change', function () {
+                table.columns(6).search(this.value).draw();
+            });
+            /*-------------------  filtro cliente ---------------- */
+            let clientes = table
+                .columns(2)
+                .data()
+                .eq(0)      // Reduce the 2D array into a 1D array of data
+                .sort()       // Sort data alphabetically
+                .unique()  // Reduce the 2D array into a 1D array of data
+                .each(function (value, index) {
+                    $('#filter-cliente').append('<option>' + value + '</option>')
+                })
+
+            $('#filter-cliente').on('change', function () {
+                table.columns(2).search(this.value).draw();
+            });
+
+
+
+            /*-------------------  Borrar Filtros y Selecciones ---------------- */
+
+            $("#borrar-filtros").on("click", function () {
+                $('#filter-cliente option,#filter-riesgo option').prop('selected', function () {
+                    return this.defaultSelected;
+                });
+                $('#min').val(mesAtras) // volver a la fecha de inicio
+                document.getElementById("max").valueAsDate = null // volver a null
+                table.columns().checkboxes.deselectAll()
+                table.columns().search("").draw() //redibujar la tabla sin filtros
+
+            });
+
+
+            /*-------------------  Obtener Datos Seleccionados ---------------- */
+
+            $('#datos').on('click', function () {
+                var data = table.rows({ selected: true }).data().toArray();
+                console.log(data)
+            })
+
+            // --------------- Check Box group ------------------------------
+
+            // Handle click event on group checkbox
+            $('#example').on('click', '.group-checkbox', function (e) {
+                // Get group class name
+                var groupName = $(this).data('group-name');
+
+                // Select all child rows
+                table.cells('tr.' + groupName, 0).checkboxes.select(this.checked);
+            });
+
+            // Handle click event on "Select all" checkbox
+            $('.dt-checkboxes-select-all').on('click', function (e) {
+                var $selectAll = $('input[type="checkbox"]', this);
+                setTimeout(function () {
+                    // Select group checkbox based on "Select all" checkbox state
+                    $('.group-checkbox').prop('checked', $selectAll.prop('checked'));
+                }, 0);
+            });
+
+            // let ordenes = table
+            //     .columns(1)
+            //     .data()
+            //     .eq(0)      // Reduce the 2D array into a 1D array of data
+            //     .sort()       // Sort data alphabetically
+            //     .unique()  // Reduce the 2D array into a 1D array of data
+            //     $('.dataTables_info').append("<span> Total de Ordenes " + ordenes.length + "</span>")
+
+
+
+
+        })
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

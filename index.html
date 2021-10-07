@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miniload V 2.0</title>
+    <link rel="stylesheet" href="./css/bootstrap-icons.css">
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="lib/jquery-3.6.0.min.js"></script>
+    <script src="lib/jquery-ui.min.js"></script>
+    <script src="lib/popper.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src='./lib/custom-modal.js'></script>
+    <script src="./app.js" type="module"></script>
+</head>
+
+<body>
+    <div class="contenedor" id="contenedor">
+        <main class="contenedor__principal">
+            <section class="contenedor__vista-a">
+                <div id="indicador-nivel-a" class="contenedor__indicador_nivel-a"></div>
+                <div class="dibujo__blur-left" id="control-left">
+                    <div class="blur__control-left" id="control-left"><i class="bi bi-caret-left-fill"
+                            id="control-left"></i></div>
+                </div>
+                <div class="dibujo__blur-right" id="control-right">
+                    <div class="blur__control-right"><i class="bi bi-caret-right-fill" id="control-right"></i>
+                    </div>
+                </div>
+                <div class="add-riel"></div>
+                <div id="deposito-anterior" class="contendor__racks-anterior no-scroll">
+
+                </div>
+            </section>
+            <section class="contenedor__panel">
+                <button type="button" class="btn btn-danger"><i class="bi bi-exclamation-circle"></i> STOP</button>
+            </section>
+            <section class="contenedor__vista-s">
+                <div class="dibujo__columna-lateral" id="columna-lateral-s">
+                    <div class="contenedor__controles-s">
+                        <div><i class="bi bi-caret-right-fill icons__control-s" id="control-izq-prof-2"></i></div>
+                        <div><i class="bi bi-caret-right-fill icons__control-s icon__seleccionado"
+                                id="control-izq-prof-1"></i></div>
+                    </div>
+                    <div class="contenedor__controles-s">
+                        <div><i class="bi bi-caret-right-fill icons__control-s" id="control-der-prof-1"></i></div>
+                        <div><i class="bi bi-caret-right-fill icons__control-s" id="control-der-prof-2"></i></div>
+                    </div>
+                </div>
+                <div class="dibujo__deposito-sup no-scroll">
+                    <div class="dibujo__blur-left control__superior" id="control-left">
+                        <div class="blur__control-left" id="control-left"><i class="bi bi-caret-left-fill"
+                                id="control-left"></i></div>
+                    </div>
+                    <div class="dibujo__blur-right control__superior" id="control-right">
+                        <div class="blur__control-right" id="control-right"><i class="bi bi-caret-right-fill"
+                                id="control-right"></i>
+                        </div>
+                    </div>
+                    <div class="add-riel-sup"></div>
+                    <div id="deposito-superior-i" class="dibujo__deposito__sup-izq">
+                    </div>
+                    <div id="deposito-superior-d" class="dibujo__deposito__sup-der"></div>
+                </div>
+            </section>
+        </main>
+        <aside class="contenedor__lateral">
+            <nav role="navigation">
+                <div id="menuToggle">
+                    <input type="checkbox" />
+                    <span></span><span></span><span></span>
+                    <ul id="menu">
+                        <li>
+                            <h2><i class="bi bi-box-seam"></i> Operaciones</h2>
+                        </li>
+                        <li><button type="button" class="btn btn-secondary mdlFire" data-bs-toggle="modal"
+                                data-bs-target="#modal-carga">Carga</button></li>
+                        <li><button type="button" class="btn btn-secondary mdlFire" data-bs-toggle="modal"
+                                data-bs-target="#modal-descarga">Descarga</button></li>
+                        <li><button type="button" class="btn btn-secondary" id="btn1">Picking</button></li>
+                        <li>
+                            <h2><i class="bi bi-gear"></i> Ajustes</h2>
+                        </li>
+                        <li><button type="button" class="btn btn-secondary">Control Software</button></li>
+                        <li><button type="button" class="btn btn-secondary">Anular Posiciones</button></li>
+                        <li><button type="button" class="btn btn-secondary">Volver a Origen</button></li>
+                        <li><button type="button" class="btn btn-secondary">Reset</button></li>
+                        <li>
+                            <h2><i class="bi bi-list-task"></i> Registros</h2>
+                        </li>
+                        <li><button type="button" class="btn btn-secondary">Log de Errores</button></li>
+                        <li><button type="button" class="btn btn-secondary">Últimas Operaciones</button></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="cards">
+                <div class="card border-light mb-3" style="max-width: 18rem;">
+                    <div class="card-header"><i class="bi bi-pie-chart"></i> Capacidad del Deposito</div>
+                    <div class="card-body">
+                        <div id="progress-bar" class="progress">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-light mb-3" style="max-width: 18rem;">
+                    <div class="card-header"><i class="bi bi-receipt-cutoff"></i> Órdenes de Picking</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                A list item
+                                <span class="badge bg-primary rounded-pill">14</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                A second list item
+                                <span class="badge bg-primary rounded-pill">2</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                A third list item
+                                <span class="badge bg-primary rounded-pill">1</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted"><i class="bi bi-arrows-fullscreen"></i></small>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <div class="minmaxCon"></div>
+    </div>
+
+
+</body>
+
+</html>
