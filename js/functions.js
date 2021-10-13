@@ -145,4 +145,25 @@ CALLES_S.forEach( calle =>{
 }
 
 
-export { seleccionNivel, seleccionLadoProf }
+function printData() {
+    let divToPrint = document.getElementById("procesada");
+    let newWin = window.open("");
+    newWin.document.write('<html><head><title>Impresión de Comprobante de Descarga</title> <link rel="stylesheet" href="./css/bootstrap.css"><link rel="stylesheet" type="text/css" href="css/style.css" media="print" ><link rel="stylesheet" type="text/css" href="DataTables/DataTables-1.11.3/css/jquery.dataTables.css"></head><body>');
+    newWin.document.write(divToPrint.outerHTML);
+    newWin.document.body.querySelectorAll('.dataTables_sizing').forEach((index) => {
+        index.style = ''
+    })
+    newWin.document.body.querySelectorAll('.sorting_disabled').forEach((index) => {
+        index.style = ''
+    })
+    newWin.document.write('</body></html>');
+
+    setTimeout(function () {
+        newWin.print();
+        newWin.close();
+    }, 500)
+
+}
+
+
+export { seleccionNivel, seleccionLadoProf, printData }

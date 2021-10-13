@@ -139,7 +139,7 @@ table.dataTable thead .sorting_desc_disabled {
   background-image: url("../images/sort_desc_disabled.png");
 }
 table.dataTable tbody tr {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
 }
 table.dataTable tbody tr.selected {
   background-color: #B0BED9;
@@ -195,7 +195,7 @@ table.dataTable.display tbody tr.selected > .sorting_3 {
   background-color: #acbad5;
 }
 table.dataTable.display tbody tr.odd > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd > .sorting_1 {
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
 }
 table.dataTable.display tbody tr.odd > .sorting_2, table.dataTable.order-column.stripe tbody tr.odd > .sorting_2 {
   background-color: #f3f3f3;
@@ -444,6 +444,11 @@ table.dataTable td {
   height: 0;
 }
 
+.dtrg-start{
+  background: #e0e0e0
+
+}
+
 @media screen and (max-width: 767px) {
   .dataTables_wrapper .dataTables_info,
 .dataTables_wrapper .dataTables_paginate {
@@ -464,3 +469,5 @@ table.dataTable td {
     margin-top: 0.5em;
   }
 }
+
+

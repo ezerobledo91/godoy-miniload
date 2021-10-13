@@ -1,10 +1,11 @@
-import { dibujarVistas} from './whjs/draw_elements.js'
+import { dibujarVistas } from './whjs/draw_elements.js'
 import { seleccionLadoProf, seleccionNivel } from './js/functions.js'
+import tablaProcesada from './js/tablas/tabla-procesada.js'
 
 dibujarVistas()
 seleccionNivel()
 seleccionLadoProf()
-
+tablaProcesada()
 
 
 // Habilitar Tooltips en todo el documento 

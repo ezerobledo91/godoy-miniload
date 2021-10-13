@@ -1,0 +1,167 @@
+[
+    {
+        "cliente": "HOLCIM ARGENTINA S.A. (TUCUMAN)",
+        "cod_articulo": "ROD6202SKF34",
+        "articulo": "W 6202-2RS2/C3GFG",
+        "comprobante": 93330,
+        "fecha_aprob": "2021-09-27T03:00:00.000Z",
+        "fecha_solic": "2021-09-27T03:00:00.000Z",
+        "deposito": "ALMACEN SEVILLANITA",
+        "liberados": 7,
+        "riesgo": "C"
+    },
+    {
+        "cliente": "HOLCIM ARGENTINA S.A. (TUCUMAN)",
+        "cod_articulo": "ROD3204SKF4",
+        "articulo": "3204 A-2Z/C3MT33",
+        "comprobante": 93330,
+        "fecha_aprob": "2021-09-27T03:00:00.000Z",
+        "fecha_solic": "2021-09-27T03:00:00.000Z",
+        "deposito": "ALMACEN SEVILLANITA",
+        "liberados": 7,
+        "riesgo": "C"
+    },
+    {
+        "cliente": "HOLCIM ARGENTINA S.A. (TUCUMAN)",
+        "cod_articulo": "ROD22315SKF13",
+        "articulo": "22315 E/C4",
+        "comprobante": 93330,
+        "fecha_aprob": "2021-09-27T03:00:00.000Z",
+        "fecha_solic": "2021-09-27T03:00:00.000Z",
+        "deposito": "ALMACEN SEVILLANITA",
+        "liberados": 3,
+        "riesgo": "C"
+    },
+    {
+        "cliente": "HOLCIM ARGENTINA S.A. (TUCUMAN)",
+        "cod_articulo": "ROD25SKF62",
+        "articulo": "NUTR 25 A",
+        "comprobante": 93330,
+        "fecha_aprob": "2021-09-27T03:00:00.000Z",
+        "fecha_solic": "2021-09-27T03:00:00.000Z",
+        "deposito": "ALMACEN SEVILLANITA",
+        "liberados": 7,
+        "riesgo": "C"
+    },
+    {
+        "cliente": "HOLCIM ARGENTINA S.A. (TUCUMAN)",
+        "cod_articulo": "ROD15SKF34",
+        "articulo": "RMS 15",
+        "comprobante": 93330,
+        "fecha_aprob": "2021-09-27T03:00:00.000Z",
+        "fecha_solic": "2021-09-27T03:00:00.000Z",
+        "deposito": "ALMACEN SEVILLANITA",
+        "liberados": 3,
+        "riesgo": "C"
+    },
+    {
+        "cliente": "RENOVA S.A. ( TIMBUES )",
+        "cod_articulo": "ROD207SKF44",
+        "articulo": "YET 207",
+        "comprobante": 93416,
+        "fecha_aprob": "2021-08-30T03:00:00.000Z",
+        "fecha_solic": "2021-08-30T03:00:00.000Z",
+        "deposito": "TUCUMAN",
+        "liberados": 6,
+        "riesgo": "A"
+    },
+    {
+        "cliente": "RENOVA S.A. ( TIMBUES )",
+        "cod_articulo": "ROD3222SKF3",
+        "articulo": "AHX 3222 G",
+        "comprobante": 93416,
+        "fecha_aprob": "2021-08-30T03:00:00.000Z",
+        "fecha_solic": "2021-08-30T03:00:00.000Z",
+        "deposito": "TUCUMAN",
+        "liberados": 7,
+        "riesgo": "A"
+    },
+    {
+        "cliente": "RENOVA S.A. ( TIMBUES )",
+        "cod_articulo": "ROD23980SKF",
+        "articulo": "23980 CC/W33",
+        "comprobante": 93416,
+        "fecha_aprob": "2021-08-30T03:00:00.000Z",
+        "fecha_solic": "2021-08-30T03:00:00.000Z",
+        "deposito": "TUCUMAN",
+        "liberados": 8,
+        "riesgo": "A"
+    },
+    {
+        "cliente": "RENOVA S.A. ( TIMBUES )",
+        "cod_articulo": "ROD2205SKF6",
+        "articulo": "2205 ETN9",
+        "comprobante": 93416,
+        "fecha_aprob": "2021-08-30T03:00:00.000Z",
+        "fecha_solic": "2021-08-30T03:00:00.000Z",
+        "deposito": "TUCUMAN",
+        "liberados": 9,
+        "riesgo": "A"
+    },
+    {
+        "cliente": "RENOVA S.A. ( TIMBUES )",
+        "cod_articulo": "ROD6008SKF9",
+        "articulo": "6008-2RS1/C3",
+        "comprobante": 93416,
+        "fecha_aprob": "2021-08-30T03:00:00.000Z",
+        "fecha_solic": "2021-08-30T03:00:00.000Z",
+        "deposito": "TUCUMAN",
+        "liberados": 7,
+        "riesgo": "A"
+    },
+    {
+        "cliente": "SA SAN MIGUEL A GICIYF",
+        "cod_articulo": "ROD5905SKF2",
+        "articulo": "NKIB 5905",
+        "comprobante": 93532,
+        "fecha_aprob": "2021-09-11T03:00:00.000Z",
+        "fecha_solic": "2021-09-11T03:00:00.000Z",
+        "deposito": "ALMACEN CENTRAL BSAS",
+        "liberados": 2,
+        "riesgo": "A"
+    },
+    {
+        "cliente": "SA SAN MIGUEL A GICIYF",
+        "cod_articulo": "ROD1210SKF2",
+        "articulo": "1210 EKTN9/C3",
+        "comprobante": 93532,
+        "fecha_aprob": "2021-09-11T03:00:00.000Z",
+        "fecha_solic": "2021-09-11T03:00:00.000Z",
+        "deposito": "ALMACEN CENTRAL BSAS",
+        "liberados": 4,
+        "riesgo": "A"
+    },
+    {
+        "cliente": "SA SAN MIGUEL A GICIYF",
+        "cod_articulo": "ROD19SKF6",
+        "articulo": "KR 19",
+        "comprobante": 93532,
+        "fecha_aprob": "2021-09-11T03:00:00.000Z",
+        "fecha_solic": "2021-09-11T03:00:00.000Z",
+        "deposito": "ALMACEN CENTRAL BSAS",
+        "liberados": 3,
+        "riesgo": "A"
+    },
+    {
+        "cliente": "SA SAN MIGUEL A GICIYF",
+        "cod_articulo": "ROD6208SKF31",
+        "articulo": "BMB-6208/080S2/UB002A",
+        "comprobante": 93532,
+        "fecha_aprob": "2021-09-11T03:00:00.000Z",
+        "fecha_solic": "2021-09-11T03:00:00.000Z",
+        "deposito": "ALMACEN CENTRAL BSAS",
+        "liberados": 6,
+        "riesgo": "A"
+    },
+    {
+        "cliente": "SA SAN MIGUEL A GICIYF",
+        "cod_articulo": "ROD6211SKF9",
+        "articulo": "6211-2RS1",
+        "comprobante": 93532,
+        "fecha_aprob": "2021-09-11T03:00:00.000Z",
+        "fecha_solic": "2021-09-11T03:00:00.000Z",
+        "deposito": "ALMACEN CENTRAL BSAS",
+        "liberados": 9,
+        "riesgo": "A"
+    }
+]

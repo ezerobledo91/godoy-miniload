@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="lib/jquery-3.6.0.min.js"></script>
     <script src="lib/jquery-ui.min.js"></script>
+    <!-- Data Tables -->
+    <link rel="stylesheet" type="text/css" href="DataTables/DataTables-1.11.3/css/jquery.dataTables.css">
+    <script src="DataTables/datatables.min.js"></script>
     <script src="lib/popper.min.js"></script>
     <script src="lib/bootstrap.min.js"></script>
     <script src='./lib/custom-modal.js'></script>
@@ -37,6 +40,15 @@
             </section>
             <section class="contenedor__panel">
                 <button type="button" class="btn btn-danger"><i class="bi bi-exclamation-circle"></i> STOP</button>
+                <div class="card border-light" style="max-width: 18rem;">
+                    <div class="card-header" style="font-size: 0.9rem"><i class="bi bi-pie-chart"></i> Capacidad del
+                        Deposito</div>
+                    <div class="card-body">
+                        <div id="progress-bar" class="progress">
+
+                        </div>
+                    </div>
+                </div>
             </section>
             <section class="contenedor__vista-s">
                 <div class="dibujo__columna-lateral" id="columna-lateral-s">
@@ -97,42 +109,81 @@
                 </div>
             </nav>
             <div class="cards">
-                <div class="card border-light mb-3" style="max-width: 18rem;">
-                    <div class="card-header"><i class="bi bi-pie-chart"></i> Capacidad del Deposito</div>
+                <div class="card border-light" style="max-width: 600px; max-height: 500px;">
+                    <div class="card-header"><i class="bi bi-receipt-cutoff"></i> Órdenes de Picking</div>
                     <div class="card-body">
-                        <div id="progress-bar" class="progress">
-
+                        <table id="procesada" class="display" style="width:100%; font-size: 12px;">
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <div class ="d-flex flex-row justify-content-between">
+                            <div>
+                                <small class="text-muted"><button type="button"
+                                        class="btn btn-primary btn-sm">Descargar</button>
+                                    <button type="button" class="btn btn-secondary btn-sm">Cancelar</button>
+                            </div>
+                            <button type="button" id="printButton" class="btn btn-secondary btn-sm"><i class="bi bi-printer"></i></button></small>
                         </div>
                     </div>
                 </div>
 
-                <div class="card border-light mb-3" style="max-width: 18rem;">
-                    <div class="card-header"><i class="bi bi-receipt-cutoff"></i> Órdenes de Picking</div>
+                <div class="card border-light mt-4" style="max-width: 600px; max-height: 500px;">
+                    <div class="card-header"><i class="bi bi-inbox-fill"></i> Articulos en Box</div>
                     <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                A list item
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                A second list item
-                                <span class="badge bg-primary rounded-pill">2</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                A third list item
-                                <span class="badge bg-primary rounded-pill">1</span>
-                            </li>
-                        </ul>
+                        <p class="" style="font-size: 14px;">Descargando:</p>
+                        <div class="cajas__superior-contenedor">
+
+                            <div class="caja__superior">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col" style="background: #22b9b9; color: white;">
+                                            1
+                                        </div>
+                                        <div class="col">
+                                            2
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            3
+                                        </div>
+                                        <div class="col">
+                                            4
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="caja__superior">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            1
+                                        </div>
+                                        <div class="col">
+                                            2
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            3
+                                        </div>
+                                        <div class="col">
+                                            4
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted"><i class="bi bi-arrows-fullscreen"></i></small>
+                        <small class="text-muted"><button type="button" class="btn btn-primary btn-sm">Modificar
+                                Cantidad</button></small>
                     </div>
                 </div>
             </div>
         </aside>
         <div class="minmaxCon"></div>
     </div>
-
 
 </body>
 
