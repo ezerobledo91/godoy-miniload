@@ -4,7 +4,7 @@ import { printData } from "../functions.js";
 
 
 export default function (){ 
- fetch('./pedidos/pedidosreducidos.json').then(res => res.json()).then(resultado => {
+ fetch('http://192.168.200.117:8080/pedidos/procesados/1').then(res => res.json()).then(resultado => {
     let table = new DataTable('#procesada', {
         paging: false,
         scrollY: 300,

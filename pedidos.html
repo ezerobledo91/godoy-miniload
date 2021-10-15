@@ -57,13 +57,17 @@
                         <button type="button" id="datos" class="btn btn-primary" title="Descargar Pedido"
                             data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i
                                 class="bi bi-arrow-down"></i></button>
-                       
+
                     </div>
 
                 </form>
-                <table id="ordenes" class="display" style="width:100%">
-
-                </table>
+                <div class="container-table">
+                    <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <table id="ordenes" class="display" style="width:100%">
+                    </table>
+                </div>
             </container>
         </main>
 
@@ -80,7 +84,7 @@
                 </div>
                 <div class="modal-body">
                     <button type="button" id="printButton" class="btn btn-secondary float-end"><i
-                        class="bi bi-printer"></i></button>
+                            class="bi bi-printer"></i></button>
                     <table id="procesada" class="display" style="width:100%">
 
                     </table>
@@ -88,8 +92,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         id="cancelarProceso">Cancelar</button>
-                    <button type="button" class="btn btn-primary" title="Descargar Pedido"><i
-                            class="bi bi-arrow-down"></i> Descargar</button> 
+                    <button type="button" class="btn btn-primary" title="Descargar Pedido" id="enviarDatos"><i
+                            class="bi bi-arrow-down"></i> Descargar</button>
                 </div>
             </div>
         </div>

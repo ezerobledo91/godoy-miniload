@@ -8,7 +8,9 @@
         "fecha_solic": "2021-09-27T03:00:00.000Z",
         "deposito": "ALMACEN SEVILLANITA",
         "liberados": 7,
-        "riesgo": "C"
+        "riesgo": "C",
+        "estado": 1,
+        "quantity": 1
     },
     {
         "cliente": "HOLCIM ARGENTINA S.A. (TUCUMAN)",

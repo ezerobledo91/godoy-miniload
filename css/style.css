@@ -697,3 +697,17 @@ table th {
 .filtros {
   font-size: 14px;
 }
+
+.container-table {
+  width: 100%;
+  height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.en-proceso{
+  background-color: #007ca4;
+  pointer-events: none;
+}

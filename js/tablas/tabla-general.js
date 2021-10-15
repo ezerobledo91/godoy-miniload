@@ -4,7 +4,7 @@ let mesAtras = `${(new Date(Date.now()).getFullYear())}-${(new Date(Date.now() -
 $('#min').val(mesAtras)
 
 
-fetch('./pedidos/pedidos2.json').then(res => res.json()).then(resultado => {
+fetch('./pedidos/pedidos.json').then(res => res.json()).then(resultado => {
     new DataTable('#ordenes', {
         paging: false,
         scrollY: 600,
@@ -32,7 +32,7 @@ fetch('./pedidos/pedidos2.json').then(res => res.json()).then(resultado => {
             },
             {
                 title: "Comprobante",
-                data: "comprobante"
+                data: "comprobante",
             },
             {
                 title: "Cliente",
@@ -67,7 +67,16 @@ fetch('./pedidos/pedidos2.json').then(res => res.json()).then(resultado => {
                 data: "liberados"
             },
 
+            {
+                data: "estado",
+            },
+            {
+                title: "Stock",
+                data: "quantity"
+            }
+
         ],
+
         rowGroup: {
             dataSrc: 'comprobante',
             startRender: function (rows, group) {
@@ -75,36 +84,71 @@ fetch('./pedidos/pedidos2.json').then(res => res.json()).then(resultado => {
                 var groupName = 'group-' + group.toString().replace(/[^A-Za-z0-9]/g, '');
                 var rowNodes = rows.nodes();
                 rowNodes.to$().addClass(groupName);
-
                 // Get selected checkboxes
                 var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
                 // Parent checkbox is selected when all child checkboxes are selected
                 var isSelected = (checkboxesSelected.length == rowNodes.length);
-
                 return '<label><input type="checkbox" class="group-checkbox" data-group-name="'
                     + groupName + '"' + (isSelected ? ' checked' : '') + '> Número de Orden ' + group + ' (' + rows.count() + ')</label>';
             }
         },
         select: {
-            style: 'multi'
+            style: 'multi',
+            selector: 'tr:not(.no-select)'
         },
+
     });
 
-
-    $(document).ready(function () {
-        table.draw();
-    });
-
+    var table = $('#ordenes').DataTable();
 
 
     // --------------- Cuadro de Busqueda ------------------------------
-    var table = $('#ordenes').DataTable();
+
     $('#searchField').keyup(function () {
         table.search($(this).val()).draw();
     })
 
+    // --------------- Ocultar el Check box Unitario y Estado ------------------------------
+    // table.column(0).visible(false);
+    table.column(8).visible(false);
 
-    // --------------- filtros de fecha ------------------------------
+
+    // --------------- No permitir check de Ordenes ya Procesadas ------------------------------
+    let arrayGroups = []
+    let inputsGroup = []
+
+    table.column(8).data().each(function (value, index) {
+        let comprobante = table.rows(index).data()[0].comprobante
+        if (value == 2) {
+            table.rows(index).nodes()[0].classList.add('en-proceso', 'no-select')
+            arrayGroups.push(comprobante)
+        }
+    })
+    arrayGroups = jQuery.unique(arrayGroups)
+    arrayGroups.forEach(function (e) {
+        inputsGroup.push({ checkbox: document.querySelector(`input[data-group-name="group-${e}"]`), inputs: document.querySelectorAll(`.group-${e}`), inputsEnProceso: document.querySelectorAll(`.group-${e}.en-proceso`), groupNumber: e })
+    })
+
+    inputsGroup.forEach(object => {
+        if (object.inputs.length == object.inputsEnProceso.length) {
+            object.checkbox.remove()
+        }
+    })
+
+
+    // --------------- Cambio de Color según stock ------------------------------
+
+    table.column(9).data().each(function (value, index) {
+        let stock = table.rows(index).data()[0].liberados
+        if (value < stock) {
+            table.rows(index).nodes()[0].style.color = "#959595"
+            table.rows(index).nodes()[0].lastChild.innerHTML = '<i class="bi bi-x-circle"></i>'
+        }
+    })
+
+
+
+    // --------------- Filtros de fecha ------------------------------
 
     $('#min, #max').change(function () {
         $.fn.dataTable.ext.search.push(
@@ -120,8 +164,6 @@ fetch('./pedidos/pedidos2.json').then(res => res.json()).then(resultado => {
                 return false;
             }
         );
-
-
     })
 
     /*-------------------  fin de filtro fecha ---------------- */
@@ -166,9 +208,9 @@ fetch('./pedidos/pedidos2.json').then(res => res.json()).then(resultado => {
     $('#ordenes').on('click', '.group-checkbox', function (e) {
         // Get group class name
         var groupName = $(this).data('group-name');
-
         // Select all child rows
         table.cells('tr.' + groupName, 0).checkboxes.select(this.checked);
+        table.cells('tr.no-select', 0).checkboxes.deselect()  // NO PERMITE EN LA SELECCION DEL GRUPO GENERAL SELECCIONAR UN ROW QUE YA ESTE PROCESADO
     });
 
     // Handle click event on "Select all" checkbox
@@ -177,100 +219,126 @@ fetch('./pedidos/pedidos2.json').then(res => res.json()).then(resultado => {
         setTimeout(function () {
             // Select group checkbox based on "Select all" checkbox state
             $('.group-checkbox').prop('checked', $selectAll.prop('checked'));
+            table.cells('tr.no-select', 0).checkboxes.deselect()
         }, 0);
     });
 
 
 
-
-    /*-------------------  Obtener Datos Seleccionados ---------------- */
-
-    $('#datos').on('click', function () {
-        if ($.fn.DataTable.isDataTable('#procesada')) {
-            data = table.rows({ selected: true }).data().toArray();
-            $('#procesada').DataTable().rows.add(data); // Add new data
-            $('#procesada').DataTable().columns.adjust().draw(); // Redraw the DataTable
-            setTimeout(function () {
-                $('#procesada').DataTable().draw()
-            }, 200)
+    //* -------- FIN LOAD TABLA DISPLAY QUITAR SPINER DIBUJAR ---------- */
+    $('.container-table').css('display', 'block')
+    $('.spinner-border').remove()
+    // table.draw()
 
 
-        } else {
-            var data = table.rows({ selected: true }).data().toArray();
-            new DataTable('#procesada', {
-                paging: false,
-                scrollY: 500,
-                info: false,
-                data: data,
-                sort: false,
-                bFilter: false,
-                columns: [
-                    {
-                        title: "Comprobante",
-                        data: "comprobante"
-                    },
-                    {
-                        title: "Cliente",
-                        data: "cliente"
-                    },
-                    {
-                        title: "Codigo",
-                        data: "cod_articulo"
-                    },
-                    {
-                        title: "Articulo",
-                        data: "articulo"
-                    },
-                    {
-                        title: "Fecha",
-                        data: "fecha_aprob",
-                        render: {
-                            display: function (data, type, row) {
-                                return data.slice(0, 10).split('-').reverse().join('/')
-                            },
-                            sort: function (data, type, row) {
-                                return new Date(data).getTime()
-                            }
+
+})
+
+/*-------------------  Obtener Datos Seleccionados ---------------- */
+
+$('#datos').on('click', function () {
+    let table = $('#ordenes').DataTable();
+    if ($.fn.DataTable.isDataTable('#procesada')) {
+        data = table.rows({ selected: true }).data().toArray();
+        $('#procesada').DataTable().rows.add(data); // Add new data
+        $('#procesada').DataTable().columns.adjust().draw(); // Redraw the DataTable
+        setTimeout(function () {
+            $('#procesada').DataTable().draw()
+        }, 200)
+
+    } else {
+        var data = table.rows({ selected: true }).data().toArray();
+        new DataTable('#procesada', {
+            paging: false,
+            scrollY: 500,
+            info: false,
+            data: data,
+            sort: false,
+            bFilter: false,
+            columns: [
+                {
+                    title: "Comprobante",
+                    data: "comprobante"
+                },
+                {
+                    title: "Cliente",
+                    data: "cliente"
+                },
+                {
+                    title: "Codigo",
+                    data: "cod_articulo"
+                },
+                {
+                    title: "Articulo",
+                    data: "articulo"
+                },
+                {
+                    title: "Fecha",
+                    data: "fecha_aprob",
+                    render: {
+                        display: function (data, type, row) {
+                            return data.slice(0, 10).split('-').reverse().join('/')
+                        },
+                        sort: function (data, type, row) {
+                            return new Date(data).getTime()
                         }
-                    },
-                    {
-                        title: "Riesgo",
-                        data: "riesgo"
-                    },
-                    {
-                        title: "Cantidad",
-                        data: "liberados"
-                    },
-
-                ],
-                rowGroup: {
-                    dataSrc: 'comprobante',
-                    startRender: function (rows, group) {
-                        // Assign class name to all child rows
-                        return '<label>Número de Orden ' + group + ' (' + rows.count() + ')</label>';
                     }
                 },
-            })
+                {
+                    title: "Riesgo",
+                    data: "riesgo"
+                },
+                {
+                    title: "Cantidad",
+                    data: "liberados"
+                },
 
-            // Demorar dibujo para que carguen los estilos de columna 
-            var tablaProcesada = $('#procesada').DataTable();
-            setTimeout(function () {
-                tablaProcesada.draw();
-            }, 200)
-
-
-        }
-
-        // ----------------- Cancelar Orden ------------------
-
-        $('#cancelarProceso').on('click', function () {
-            $('#procesada').DataTable().clear()
-
+            ],
+            rowGroup: {
+                dataSrc: 'comprobante',
+                startRender: function (rows, group) {
+                    // Assign class name to all child rows
+                    return '<label>Número de Orden ' + group + ' (' + rows.count() + ')</label>';
+                }
+            },
         })
+
+        // Demorar dibujo para que carguen los estilos de columna 
+        var tablaProcesada = $('#procesada').DataTable();
+        setTimeout(function () {
+            tablaProcesada.draw();
+        }, 200)
+
+
+    }
+
+    // ----------------- Cancelar Orden ------------------
+
+    $('#cancelarProceso').on('click', function () {
+        $('#procesada').DataTable().clear()
 
     })
 
 
+    //------  Enviar Orden POST ---------------------
+
+    $('#enviarDatos').on('click', function () { enviarDatos() })
+    async function enviarDatos() {
+        let response = await fetch('http://192.168.200.117:8080/procesados/generar/1', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(data)
+        });
+
+        let result = await response;
+        console.log(result)
+        if (result.status == 200) {
+            alert("La orden fué procesada correctamente, debe visualizarlo desde la pantalla Principal")
+            location.reload()
+        }
+    }
 
 
 
@@ -302,5 +370,7 @@ function printData() {
 $('#printButton').on('click', function () {
     printData();
 })
+
+
 
 
