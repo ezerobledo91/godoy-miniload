@@ -686,6 +686,17 @@ button:focus {
 .dataTable td {
   font-size: 14px;
 }
+thead,
+tbody,
+tfoot,
+tr,
+td,
+th {
+  text-align: center;
+}
+.dtrg-group td {
+  text-align: left;
+}
 
 table th {
   font-size: 14px;
@@ -707,7 +718,7 @@ table th {
   flex-direction: column;
 }
 
-.en-proceso{
-  background-color: #007ca4;
+.en-proceso {
+  background-color: rgb(0 123 255 / 25%);
   pointer-events: none;
 }

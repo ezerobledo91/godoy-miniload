@@ -5,11 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedidos Miniload Godoy Poviña</title>
-    <link rel="stylesheet" href="./css/style.css">
+
     <link rel="stylesheet" type="text/css" href="DataTables/DataTables-1.11.3/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="./DataTables/datatables.css">
     <link rel="stylesheet" href="css/bootstrap-icons.css">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="./css/style.css">
     <link type="text/css" href="./DataTables/dataTables.checkboxes.css" rel="stylesheet" />
 
 
@@ -19,7 +20,7 @@
 
     <div class="contenedor__pedidos" id="contenedor">
         <main class="">
-            <h2>Lista de Pedidos</h2>
+            <h2>Pedidos Liberados</h2>
             <container>
                 <form class="row g-3 mb-1 filtros">
                     <div class="col-auto">
@@ -32,7 +33,7 @@
                     </div>
                     <div class="col-auto">
                         <label>Riesgo:</label>
-                        <select id="filter-riesgo" class="form-control form-control-sm">
+                        <select id="filter-riesgo" class="form-select form-select-sm">
                             <option value="" selected="selected">Todos</option>
                             <option>A</option>
                             <option>B</option>
@@ -41,22 +42,32 @@
                     </div>
                     <div class="col-auto">
                         <label>Cliente:</label>
-                        <select id="filter-cliente" class="form-control form-control-sm">
+                        <select id="filter-cliente" class="form-select form-select-sm">
                             <option value="" selected="selected">Todos</option>
                         </select>
                     </div>
+                    <div class="col-auto">
+                        <label>Código de Articulo:</label>
+                        <select id="filter-codigo" class="form-select form-select-sm">
+                            <option value="" selected="selected">Todos</option>
+                        </select>
+                    </div>
+
                     <div class="col-auto d-flex align-items-end">
                         <input id="searchField" type="text" class="form-control form-control-sm"
                             placeholder="Ingrese una Busqueda">
                     </div>
                     <div class="col-auto d-flex align-items-end">
-                        <button type="button" id="borrar-filtros" class="btn btn-secondary" title="Limpiar Filtros"><i
-                                class="bi bi-trash"></i></button>
+                        <button type="button" id="borrar-filtros" class="btn btn-secondary" class="btn btn-primary"
+                            data-bs-toggle="tooltip" title="Limpiar Filtros"><i class="bi bi-trash"></i></button>
                     </div>
                     <div class="col-auto d-flex align-items-end">
-                        <button type="button" id="datos" class="btn btn-primary" title="Descargar Pedido"
-                            data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i
-                                class="bi bi-arrow-down"></i></button>
+                        <span data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <button type="button" id="datos" class="btn btn-primary" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Procesar Pedido">
+                                <i class="bi bi-arrow-down"></i>
+                            </button>
+                        </span>
 
                     </div>
 
@@ -65,7 +76,7 @@
                     <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;">
                         <span class="visually-hidden">Loading...</span>
                     </div>
-                    <table id="ordenes" class="display" style="width:100%">
+                    <table id="ordenes" class="display row-border" style="width:100%">
                     </table>
                 </div>
             </container>
@@ -76,7 +87,7 @@
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Ordenes a Procesar</h5>
@@ -98,11 +109,18 @@
             </div>
         </div>
     </div>
-
-    <script src="lib/bootstrap.min.js"></script>
     <script src="DataTables/datatables.min.js"></script>
     <script type="text/javascript" src="DataTables/dataTables.checkboxes.min.js"></script>
-    <script src="js/tablas/tabla-general.js"></script>
+    <script src="lib/popper.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="js/tablas/tabla-general.js" type="module"></script>
+    <script>
+        // Habilitar Tooltips en todo el documento 
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
 </body>
 
 </html>

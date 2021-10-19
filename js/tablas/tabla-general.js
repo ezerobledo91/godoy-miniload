@@ -1,240 +1,181 @@
-// http://192.168.200.117:8080/pedidos
+import { printData, nonSelect, filtrosLoad, groupCheck, enviarDatos } from './tabla-functions.js'
 
 let mesAtras = `${(new Date(Date.now()).getFullYear())}-${(new Date(Date.now() - 30).getMonth()).toString().padStart(2, 0)}-01`
 $('#min').val(mesAtras)
 
 
-fetch('./pedidos/pedidos.json').then(res => res.json()).then(resultado => {
-    new DataTable('#ordenes', {
-        paging: false,
-        scrollY: 600,
-        data: resultado,
-        info: true,
-        dom: 'lrti',
-        infoCallback: function (settings, start, end, max, total, pre) {
-            return 'Total de Artículos ' + total + " de " + max;
-        },
-        language: {
-            info: 'Mostrando  _END_  de _TOTAL_ ',
-            infoFiltered: 'filtrado de  _MAX_ ',
-            select: {
-                rows: ""
-            },
-            search: "Buscar:"
-        },
+const URL = './pedidos/pedidos.json'
+//http://bnbandeo.com.ar:8080/liberar
+//http://bnbandeo.com.ar:8080/liberartodas
+//http://168.181.186.238:8080/pedidos
 
-        columns: [
-            {
-                'data': 'comprobante',
-                'checkboxes': {
-                    'selectRow': true
-                }
+tablaPrincipal(URL, mesAtras)
+function tablaPrincipal(URL, mesAtras) {
+    fetch(URL).then(res => res.json()).then(resultado => {
+        new DataTable('#ordenes', {
+            paging: false,
+            scrollY: 600,
+            data: resultado,
+            info: true,
+            dom: 'lrti',
+            infoCallback: function (settings, start, end, max, total, pre) {
+                return 'Total de Artículos ' + total + " de " + max;
             },
-            {
-                title: "Comprobante",
-                data: "comprobante",
+            language: {
+                info: 'Mostrando  _END_  de _TOTAL_ ',
+                infoFiltered: 'filtrado de  _MAX_ ',
+                select: {
+                    rows: ""
+                },
+                search: "Buscar:"
             },
-            {
-                title: "Cliente",
-                data: "cliente"
-            },
-            {
-                title: "Codigo",
-                data: "cod_articulo"
-            },
-            {
-                title: "Articulo",
-                data: "articulo"
-            },
-            {
-                title: "Fecha",
-                data: "fecha_aprob",
-                render: {
-                    display: function (data, type, row) {
-                        return data.slice(0, 10).split('-').reverse().join('/')
-                    },
-                    sort: function (data, type, row) {
-                        return new Date(data).getTime()
+
+            columns: [
+                {
+                    'data': 'comprobante',
+                    'checkboxes': {
+                        'selectRow': true
                     }
+                },
+                {
+                    title: "Comprobante",
+                    data: "comprobante",
+                },
+                {
+                    title: "Cliente",
+                    data: "cliente"
+                },
+                {
+                    title: "Codigo",
+                    data: "cod_articulo"
+                },
+                {
+                    title: "Articulo",
+                    data: "articulo"
+                },
+                {
+                    title: "Fecha Aprobación",
+                    data: "fecha_aprob",
+                    render: {
+                        display: function (data, type, row) {
+                            return data.slice(0, 10).split('-').reverse().join('/')
+                        },
+                        sort: function (data, type, row) {
+                            return new Date(data).getTime()
+                        }
+                    }
+                },
+                {
+                    title: "Fecha Solicitado",
+                    data: "fecha_solic",
+                    render: {
+                        display: function (data, type, row) {
+                            return data.slice(0, 10).split('-').reverse().join('/')
+                        },
+                        sort: function (data, type, row) {
+                            return new Date(data).getTime()
+                        }
+                    }
+                },
+                {
+                    title: "Riesgo",
+                    data: "riesgo"
+                },
+                {
+                    title: "Liberados",
+                    data: "liberados"
+                },
+
+                {
+                    data: "estado",
+                },
+                {
+                    title: "Disponible en Deposito",
+                    data: "quantity",
+                    render: {
+                        display: function (data, type, row) {
+                            // console.log(row.liberados)
+                            // console.log(data)
+                            if (data <= 0 || data == null) {
+                                return '<i class="bi bi-x-circle"></i>'
+                            } else {
+                                return data
+                            }
+
+
+                        }
+                    }
+                },
+                {
+                    title: "Stock General",
+                    data: "quantity",
+                    render: {
+                        display: function (data, type, row) {
+                            // console.log(row.liberados)
+                            // console.log(data)
+                            if (data <= 0 || data == null) {
+                                return '<i class="bi bi-x-circle"></i>'
+                            } else {
+                                return data
+                            }
+
+
+                        }
+                    }
+                },
+                {
+                    title: "Disponible en Operación",
+                    data: null,
+                    defaultContent: "",
+
+                }
+
+            ],
+
+            rowGroup: {
+                dataSrc: 'comprobante',
+                startRender: function (rows, group) {
+                    // Assign class name to all child rows
+                    var groupName = 'group-' + group.toString().replace(/[^A-Za-z0-9]/g, '');
+                    var rowNodes = rows.nodes();
+                    rowNodes.to$().addClass(groupName);
+                    // Get selected checkboxes
+                    var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                    // Parent checkbox is selected when all child checkboxes are selected
+                    var isSelected = (checkboxesSelected.length == rowNodes.length);
+                    return '<label class="d-flex align-items-center justify-content-evenly" style="width:250px"><input type="checkbox" class="group-checkbox" data-group-name="'
+                        + groupName + '"' + (isSelected ? ' checked' : '') + '> Número de Orden ' + group + ' <span class="badge bg-light text-dark">' + rows.count() + '</span></label>';
                 }
             },
-            {
-                title: "Riesgo",
-                data: "riesgo"
-            },
-            {
-                title: "Cantidad",
-                data: "liberados"
+            select: {
+                style: 'multi',
+                selector: 'tr:not(.no-select)'
             },
 
-            {
-                data: "estado",
-            },
-            {
-                title: "Stock",
-                data: "quantity"
-            }
-
-        ],
-
-        rowGroup: {
-            dataSrc: 'comprobante',
-            startRender: function (rows, group) {
-                // Assign class name to all child rows
-                var groupName = 'group-' + group.toString().replace(/[^A-Za-z0-9]/g, '');
-                var rowNodes = rows.nodes();
-                rowNodes.to$().addClass(groupName);
-                // Get selected checkboxes
-                var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
-                // Parent checkbox is selected when all child checkboxes are selected
-                var isSelected = (checkboxesSelected.length == rowNodes.length);
-                return '<label><input type="checkbox" class="group-checkbox" data-group-name="'
-                    + groupName + '"' + (isSelected ? ' checked' : '') + '> Número de Orden ' + group + ' (' + rows.count() + ')</label>';
-            }
-        },
-        select: {
-            style: 'multi',
-            selector: 'tr:not(.no-select)'
-        },
-
-    });
-
-    var table = $('#ordenes').DataTable();
-
-
-    // --------------- Cuadro de Busqueda ------------------------------
-
-    $('#searchField').keyup(function () {
-        table.search($(this).val()).draw();
-    })
-
-    // --------------- Ocultar el Check box Unitario y Estado ------------------------------
-    // table.column(0).visible(false);
-    table.column(8).visible(false);
-
-
-    // --------------- No permitir check de Ordenes ya Procesadas ------------------------------
-    let arrayGroups = []
-    let inputsGroup = []
-
-    table.column(8).data().each(function (value, index) {
-        let comprobante = table.rows(index).data()[0].comprobante
-        if (value == 2) {
-            table.rows(index).nodes()[0].classList.add('en-proceso', 'no-select')
-            arrayGroups.push(comprobante)
-        }
-    })
-    arrayGroups = jQuery.unique(arrayGroups)
-    arrayGroups.forEach(function (e) {
-        inputsGroup.push({ checkbox: document.querySelector(`input[data-group-name="group-${e}"]`), inputs: document.querySelectorAll(`.group-${e}`), inputsEnProceso: document.querySelectorAll(`.group-${e}.en-proceso`), groupNumber: e })
-    })
-
-    inputsGroup.forEach(object => {
-        if (object.inputs.length == object.inputsEnProceso.length) {
-            object.checkbox.remove()
-        }
-    })
-
-
-    // --------------- Cambio de Color según stock ------------------------------
-
-    table.column(9).data().each(function (value, index) {
-        let stock = table.rows(index).data()[0].liberados
-        if (value < stock) {
-            table.rows(index).nodes()[0].style.color = "#959595"
-            table.rows(index).nodes()[0].lastChild.innerHTML = '<i class="bi bi-x-circle"></i>'
-        }
-    })
-
-
-
-    // --------------- Filtros de fecha ------------------------------
-
-    $('#min, #max').change(function () {
-        $.fn.dataTable.ext.search.push(
-            function (settings, data, dataIndex) {
-                let timeOffset = new Date(document.getElementById("min").value).getTimezoneOffset() * 60000
-                let minim = (new Date(document.getElementById("min").value).getTime() + timeOffset) / 1000
-                let maxim = (new Date(document.getElementById("max").value).getTime() + timeOffset) / 1000
-                let date = new Date((data[5]).slice(0, 10).split('-').join('/')).getTime() / 1000
-                if ((minim <= date && isNaN(maxim))
-                    || (minim <= date && maxim >= date)) {
-                    return true;
-                }
-                return false;
-            }
-        );
-    })
-
-    /*-------------------  fin de filtro fecha ---------------- */
-
-    /*-------------------  filtro riesgo ---------------- */
-    $('#filter-riesgo').on('change', function () {
-        table.columns(6).search(this.value).draw();
-    });
-    /*-------------------  filtro cliente ---------------- */
-    let clientes = table
-        .columns(2)
-        .data()
-        .eq(0)      // Reduce the 2D array into a 1D array of data
-        .sort()       // Sort data alphabetically
-        .unique()  // Reduce the 2D array into a 1D array of data
-        .each(function (value, index) {
-            $('#filter-cliente').append('<option>' + value + '</option>')
-        })
-
-    $('#filter-cliente').on('change', function () {
-        table.columns(2).search(this.value).draw();
-    });
-
-
-
-    /*-------------------  Borrar Filtros y Selecciones ---------------- */
-
-    $("#borrar-filtros").on("click", function () {
-        $('#filter-cliente option,#filter-riesgo option').prop('selected', function () {
-            return this.defaultSelected;
         });
-        $('#min').val(mesAtras) // volver a la fecha de inicio
-        document.getElementById("max").valueAsDate = null // volver a null
-        table.columns().checkboxes.deselectAll()
-        table.columns().search("").draw() //redibujar la tabla sin filtros
 
-    });
+        let table = $('#ordenes').DataTable();
 
-    // --------------- Check Box group ------------------------------
+        // table.column(0).visible(false);
+        table.column(9).visible(false); // -> Ocultar Columna Estado
 
-    // Handle click event on group checkbox
-    $('#ordenes').on('click', '.group-checkbox', function (e) {
-        // Get group class name
-        var groupName = $(this).data('group-name');
-        // Select all child rows
-        table.cells('tr.' + groupName, 0).checkboxes.select(this.checked);
-        table.cells('tr.no-select', 0).checkboxes.deselect()  // NO PERMITE EN LA SELECCION DEL GRUPO GENERAL SELECCIONAR UN ROW QUE YA ESTE PROCESADO
-    });
+        nonSelect(table)
+        table.on('draw', function () {
+            nonSelect(table)
+        });
 
-    // Handle click event on "Select all" checkbox
-    $('.dt-checkboxes-select-all').on('click', function (e) {
-        var $selectAll = $('input[type="checkbox"]', this);
-        setTimeout(function () {
-            // Select group checkbox based on "Select all" checkbox state
-            $('.group-checkbox').prop('checked', $selectAll.prop('checked'));
-            table.cells('tr.no-select', 0).checkboxes.deselect()
-        }, 0);
-    });
+        groupCheck(table)
+        filtrosLoad(table, mesAtras)
+
+        //* -------- FIN LOAD TABLA DISPLAY QUITAR SPINER DIBUJAR ---------- */
+        $('.spinner-border').remove()
 
 
-
-    //* -------- FIN LOAD TABLA DISPLAY QUITAR SPINER DIBUJAR ---------- */
-    $('.container-table').css('display', 'block')
-    $('.spinner-border').remove()
-    // table.draw()
+    })
+}
 
 
-
-})
-
-/*-------------------  Obtener Datos Seleccionados ---------------- */
+/*-------------------  Dibujado de Tabla con Datos Seleccionadas MODAL ---------------- */
 
 $('#datos').on('click', function () {
     let table = $('#ordenes').DataTable();
@@ -258,7 +199,7 @@ $('#datos').on('click', function () {
             columns: [
                 {
                     title: "Comprobante",
-                    data: "comprobante"
+                    data: "comprobante",
                 },
                 {
                     title: "Cliente",
@@ -289,15 +230,30 @@ $('#datos').on('click', function () {
                     data: "riesgo"
                 },
                 {
-                    title: "Cantidad",
+                    title: "Liberados",
                     data: "liberados"
                 },
+                {
+                    title: "Stock en Deposito",
+                    data: "quantity",
+                    render: {
+                        display: function (data, type, row) {
+                            // console.log(row.liberados)
+                            // console.log(data)
+                            if (data <= 0 || data == null) {
+                                return '<i class="bi bi-x-circle"></i>'
+                            } else {
+                                return data
+                            }
+                        }
+                    }
+                }
 
             ],
+
             rowGroup: {
                 dataSrc: 'comprobante',
                 startRender: function (rows, group) {
-                    // Assign class name to all child rows
                     return '<label>Número de Orden ' + group + ' (' + rows.count() + ')</label>';
                 }
             },
@@ -319,56 +275,15 @@ $('#datos').on('click', function () {
 
     })
 
-
     //------  Enviar Orden POST ---------------------
-
-    $('#enviarDatos').on('click', function () { enviarDatos() })
-    async function enviarDatos() {
-        let response = await fetch('http://192.168.200.117:8080/procesados/generar/1', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(data)
-        });
-
-        let result = await response;
-        console.log(result)
-        if (result.status == 200) {
-            alert("La orden fué procesada correctamente, debe visualizarlo desde la pantalla Principal")
-            location.reload()
-        }
-    }
-
-
-
-
-
+    $('#enviarDatos').on('click', function () { enviarDatos(data) })
 
 })
 
-function printData() {
-    let divToPrint = document.getElementById("procesada");
-    let newWin = window.open("");
-    newWin.document.write('<html><head><title>Impresión de Comprobante de Descarga</title> <link rel="stylesheet" href="./css/bootstrap.css"><link rel="stylesheet" type="text/css" href="css/style.css" media="print" ><link rel="stylesheet" type="text/css" href="DataTables/DataTables-1.11.3/css/jquery.dataTables.css"></head><body>');
-    newWin.document.write(divToPrint.outerHTML);
-    newWin.document.body.querySelectorAll('.dataTables_sizing').forEach((index) => {
-        index.style = ''
-    })
-    newWin.document.body.querySelectorAll('.sorting_disabled').forEach((index) => {
-        index.style = ''
-    })
-    newWin.document.write('</body></html>');
-
-    setTimeout(function () {
-        newWin.print();
-        newWin.close();
-    }, 500)
-
-}
 
 $('#printButton').on('click', function () {
-    printData();
+    const ID_TABLA = document.getElementById("procesada")
+    printData(ID_TABLA);
 })
 
 
