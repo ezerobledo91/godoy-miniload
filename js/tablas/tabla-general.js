@@ -1,17 +1,22 @@
-import { printData, nonSelect, filtrosLoad, groupCheck, enviarDatos } from './tabla-functions.js'
-
+import { nonSelect, filtrosLoad, groupCheck, enviarDatos } from './tabla-functions.js'
+import { printData } from '../tablas/print-exports.js'
 let mesAtras = `${(new Date(Date.now()).getFullYear())}-${(new Date(Date.now() - 30).getMonth()).toString().padStart(2, 0)}-01`
 $('#min').val(mesAtras)
 
 
-const URL = './pedidos/pedidos.json'
+const URL = 'http://168.181.186.238:8080/pedidos'
 //http://bnbandeo.com.ar:8080/liberar
 //http://bnbandeo.com.ar:8080/liberartodas
 //http://168.181.186.238:8080/pedidos
+// ./pedidos/pedidos.json
 
 tablaPrincipal(URL, mesAtras)
 function tablaPrincipal(URL, mesAtras) {
     fetch(URL).then(res => res.json()).then(resultado => {
+        resultado.forEach((linea, index) => {
+            Object.assign(linea, { id_: index })
+        })
+
         new DataTable('#ordenes', {
             paging: false,
             scrollY: 600,
@@ -124,7 +129,7 @@ function tablaPrincipal(URL, mesAtras) {
                     }
                 },
                 {
-                    title: "Disponible en Operación",
+                    title: "Disponible post Operación",
                     data: null,
                     defaultContent: "",
 

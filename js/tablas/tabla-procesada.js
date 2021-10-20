@@ -30,6 +30,23 @@ export default function () {
                     title: "Cantidad",
                     data: "liberados"
                 },
+                {
+                    title: "Disponible en Deposito",
+                    data: "quantity",
+                    render: {
+                        display: function (data, type, row) {
+                            // console.log(row.liberados)
+                            // console.log(data)
+                            if (data <= 0 || data == null) {
+                                return '<i class="bi bi-x-circle"></i>'
+                            } else {
+                                return data
+                            }
+
+
+                        }
+                    }
+                },
 
             ],
             rowGroup: {

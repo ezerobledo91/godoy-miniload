@@ -664,27 +664,16 @@ button:focus {
   justify-content: center;
 }
 
-@media print {
-  thead,
-  tbody,
-  tfoot,
-  tr,
-  td,
-  th {
-    border-color: inherit;
-    border-style: solid;
-    border-width: 0;
-    -webkit-print-color-adjust: exact;
-  }
-
-  .dataTables_sizing {
-    height: 30px;
-    overflow: visible;
-  }
+.card.dataTable td {
+  font-size: 12px;
 }
 
 .dataTable td {
   font-size: 14px;
+}
+
+.card .dataTable thead th {
+  padding: 0;
 }
 thead,
 tbody,
@@ -721,4 +710,53 @@ table th {
 .en-proceso {
   background-color: rgb(0 123 255 / 25%);
   pointer-events: none;
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+
+  body {
+    background: none;
+    padding-top: 0;
+  }
+
+  .head {
+    width: 100%;
+    padding: 10px;
+    border: solid 1px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .dataTable thead th {
+    padding: 0;
+  }
+
+  thead,
+  tbody,
+  tfoot,
+  tr,
+  td,
+  th {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+  }
+
+  .dataTables_sizing {
+    overflow: visible;
+  }
+
+  .footerPage {
+    z-index: 1;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    text-align: left;
+    left: 0;
+    width:100%;
+    display:block;
+  }
 }

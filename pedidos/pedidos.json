@@ -2711,24 +2711,6 @@
         "liberados": 8,
         "riesgo": "A",
         "estado": 1,
-        "module_id": 101179,
-        "crate_id": 1179,
-        "codbar": "ROD30203SKF",
-        "product": "30203",
-        "quantity": 178
-    },
-    {
-        "id": 151,
-        "cliente": "HOLCIM ARGENTINA S.A. (TUCUMAN)",
-        "cod_articulo": "ROD30203SKF",
-        "articulo": "30203",
-        "comprobante": 95409,
-        "fecha_aprob": "2021-09-30T03:00:00.000Z",
-        "fecha_solic": "2021-09-30T03:00:00.000Z",
-        "deposito": "RESISTENCIA",
-        "liberados": 8,
-        "riesgo": "A",
-        "estado": 1,
         "module_id": 101152,
         "crate_id": 1152,
         "codbar": "ROD30203SKF",
@@ -2841,7 +2823,7 @@
         "crate_id": null,
         "codbar": null,
         "product": null,
-        "quantity": 25
+        "quantity": null
     },
     {
         "id": 158,
@@ -3597,7 +3579,7 @@
         "crate_id": null,
         "codbar": null,
         "product": null,
-        "quantity": 25
+        "quantity": null
     },
     {
         "id": 200,
@@ -7198,5 +7180,41 @@
         "codbar": "ROD23232SKF5",
         "product": "23232 CC/C4W33",
         "quantity": 245
+    },
+    {
+        "id": 400,
+        "cliente": "HOLCIM ARGENTINA S.A. (TUCUMAN)",
+        "cod_articulo": "ROD30203SKF",
+        "articulo": "30203",
+        "comprobante": 95492,
+        "fecha_aprob": "2021-09-30T03:00:00.000Z",
+        "fecha_solic": "2021-09-30T03:00:00.000Z",
+        "deposito": "RESISTENCIA",
+        "liberados": 8,
+        "riesgo": "A",
+        "estado": 1,
+        "module_id": 101152,
+        "crate_id": 1152,
+        "codbar": "ROD30203SKF",
+        "product": "30203",
+        "quantity": 178
+    },
+    {
+        "id": 401,
+        "cliente": "HOLCIM ARGENTINA S.A. (TUCUMAN)",
+        "cod_articulo": "ROD30203SKF",
+        "articulo": "30203",
+        "comprobante": 90492,
+        "fecha_aprob": "2021-09-30T03:00:00.000Z",
+        "fecha_solic": "2021-09-30T03:00:00.000Z",
+        "deposito": "RESISTENCIA",
+        "liberados": 8,
+        "riesgo": "A",
+        "estado": 1,
+        "module_id": 101152,
+        "crate_id": 1152,
+        "codbar": "ROD30203SKF",
+        "product": "30203",
+        "quantity": 178
     }
 ]

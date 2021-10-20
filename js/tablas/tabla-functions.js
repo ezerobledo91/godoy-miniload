@@ -1,24 +1,4 @@
 
-// ----------------------------- IMPRIMIR ------------------------------------------------
-function printData(id) {
-    let divToPrint = id;
-    let newWin = window.open("");
-    newWin.document.write('<html><head><title>Impresión de Comprobante de Descarga</title><link rel="stylesheet" href="css/bootstrap-icons.css"><link rel="stylesheet" href="./css/bootstrap.css"><link rel="stylesheet" type="text/css" href="css/style.css" media="print" ><link rel="stylesheet" type="text/css" href="DataTables/DataTables-1.11.3/css/jquery.dataTables.css"></head><body>');
-    newWin.document.write(divToPrint.outerHTML);
-    newWin.document.body.querySelectorAll('.dataTables_sizing').forEach((index) => {
-        index.style = ''
-    })
-    newWin.document.body.querySelectorAll('.sorting_disabled').forEach((index) => {
-        index.style = ''
-    })
-    newWin.document.write('</body></html>');
-
-    setTimeout(function () {
-        newWin.print();
-        // newWin.close();
-    }, 500)
-
-}
 
 
 // --------------- No permitir check de Ordenes ya Procesadas ------------------------------
@@ -156,7 +136,6 @@ function filtrosLoad(table, mesAtras) {
         });
         $('#min').val(mesAtras) // volver a la fecha de inicio
         document.getElementById("max").valueAsDate = null // volver a null
-        table.columns().checkboxes.deselectAll()
         table.columns().search("").draw() //redibujar la tabla sin filtros
 
     });
@@ -172,29 +151,37 @@ function filtrosLoad(table, mesAtras) {
 
 
     //----------------------------- Conversión en tiempo real de disponible en cada operación ---------------------------
+    $('.dt-checkboxes-select-all').on('click', function () {
+        operationSelectRows()
+    })
+
     table.on('click', 'tr', function () {
-        let object = this
+        operationSelectRows()
+    })
+
+    function operationSelectRows() {
         setTimeout(function () {
-            let dataObject = table.rows().data() // array de objetos seleccionados (rows)
-            let indexOfData = table.row(object).index()   // index de la seleccion actual
-            let valueOfDisponible = table.cell({ row: indexOfData, column: 10 }).data()      // celda seleccionada actual , columna 10 (disponible en stock)
-            let valueOfLiberado = table.cell({ row: indexOfData, column: 8 }).data()        // celda seleccionada actual , columna 8 (liberados)
-            let cellOfOperacion = table.cell({ row: indexOfData, column: 12 }).nodes()[0]   // celda seleccionada actual , columna 12 (Lo que va quedando disponible en cada operación)
-            let resultadoOf = 0
-
-            if (object.classList.contains("selected")) {
-                resultadoOf = valueOfDisponible - valueOfLiberado
-                if (resultadoOf < 0) {
-                    cellOfOperacion.innerHTML = '<i class="bi bi-x-circle"></i>'
-                } else {
-                    cellOfOperacion.innerHTML = resultadoOf
-                }
-
-            } else {
-                cellOfOperacion.innerHTML = ""
+            let dataObject = table.rows({ selected: true }).data() // array de objetos seleccionados (rows)
+            let allData = table.rows().data()  // Todos los datos de la seleccion actual
+            console.log(allData)
+            function seleccionSimple() {
+                dataObject.each(e => {
+                    let valueOfDisponible = table.cell({ row: (e.id_), column: 10 }).data()  // celda seleccionada actual , columna 10 (disponible en stock)
+                    let valueOfLiberado = table.cell({ row: (e.id_), column: 8 }).data()  // celda seleccionada actual , columna 8 (liberados)
+                    let resultadoOf = valueOfDisponible - valueOfLiberado
+                    if (resultadoOf < 0) {
+                        table.cell({ row: (e.id_), column: 12 }).nodes()[0].innerHTML = '<i class="bi bi-x-circle"></i>'
+                    } else {
+                        table.cell({ row: (e.id_), column: 12 }).nodes()[0].innerHTML = resultadoOf
+                    }
+                })
             }
 
+            allData.each(e => {
+                table.row(e.id_).node().classList.contains("selected") ? 0 : table.cell({ row: (e.id_), column: 12 }).nodes()[0].innerHTML = ' '
+            })
 
+            seleccionSimple()
 
             // ------  Busca y deja solo los objetos repetidos por cod_articulo  -------
             function searchObject(array) {
@@ -228,7 +215,7 @@ function filtrosLoad(table, mesAtras) {
                 return h;
             }, {})
 
-            // ----   Sumatoria de Cantidades de Articulos y Operación por cada Grupo  
+            // ----   Sumatoria de Cantidades de Articulos y Operación por cada Grupo, innerHTML en celda correspondiente al Index!  
 
             for (const property in result) {
                 let grupoRepetidos = result[property]
@@ -239,34 +226,26 @@ function filtrosLoad(table, mesAtras) {
 
                 for (let index = 0; index < dataObject.length; index++) {
                     grupoRepetidos.forEach(element => {
-                        if (dataObject[index].id === element.id) {
-                            let celda = table.cell({ row: index, column: 12 }).nodes()[0]
-                            celda.innerHTML = sumatoria
+                        if (dataObject[index].id_ === element.id_) {
+                            let celda = table.cell({ row: (element.id_), column: 12 }).nodes()[0]
+                            let valueOfDisponible = table.cell({ row: (element.id_), column: 10 }).data()
+                            let operacion = valueOfDisponible - sumatoria
+                            if (operacion < 0) {
+                                celda.innerHTML = '<i class="bi bi-x-circle"></i>'
+                            } else {
+                                celda.innerHTML = operacion
+                            }
+
                         }
                     })
                 }
 
             }
 
-
-
-            // let sumatoria = 0
-            // let resultado = 0
-            // if (objectRepeat.length > 1) {
-            //     objectRepeat.forEach(element => {
-            //         sumatoria += element.liberado
-            //     })
-            //     resultado = valueOfDisponible - sumatoria
-            //     cellOfOperacion.innerHTML = resultado
-            //     if (resultado < 0) {
-            //         alert("La cantidad que desea descargar no puede ser cubierta con el stock disponible de toda la operacion seleccionada")
-            //     }
-            // }
-
         }, 10)
-    })
-}
+    }
 
+}
 
 // ------------------- Filtro de Fecha ----------------------------
 function filtroFecha(table) {
@@ -315,4 +294,4 @@ async function enviarDatos(data) {
 
 
 
-export { printData, nonSelect, groupCheck, filtrosLoad, filtroFecha, enviarDatos }
+export { nonSelect, groupCheck, filtrosLoad, filtroFecha, enviarDatos }

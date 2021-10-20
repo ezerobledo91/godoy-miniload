@@ -93,18 +93,16 @@ document.addEventListener('click', (e) => {
     if (e.target.classList.contains('rack__box')) {
         let x = e.target.offsetLeft
         moverMiniX(x)
-        console.log(x)
         let y = e.target.offsetTop
         moverMiniY(y)
-        let  c= parseID('C',e.target.id)
+        let c = parseID('C', e.target.id)
         resaltarCalle(c)
     }
 
     if (e.target.classList.contains('rack__box-superior')) {
         let x = e.target.offsetLeft
-        console.log(x)
         moverMiniX(x - 86) // 86 corrección vista superior.
-        let  c= parseID('C',e.target.id)
+        let c = parseID('C', e.target.id)
         resaltarCalle(c)
     }
 })
@@ -126,22 +124,22 @@ const parseID = (query, id) => {
 
 
 const resaltarCalle = (c) => {
-const CALLES = document.querySelectorAll('.numeros__calle-anterior')
-const CALLES_S = document.querySelectorAll('.numeros__calle-superior')
-CALLES.forEach( calle =>{
-    calle.classList.remove('box__state-full')
-    if(calle.textContent === c){
-        calle.classList.add('box__state-full')
-    }
+    const CALLES = document.querySelectorAll('.numeros__calle-anterior')
+    const CALLES_S = document.querySelectorAll('.numeros__calle-superior')
+    CALLES.forEach(calle => {
+        calle.classList.remove('box__state-full')
+        if (calle.textContent === c) {
+            calle.classList.add('box__state-full')
+        }
 
-})
-CALLES_S.forEach( calle =>{
-    calle.classList.remove('box__state-full')
-    if(calle.textContent === c){
-        calle.classList.add('box__state-full')
-    }
+    })
+    CALLES_S.forEach(calle => {
+        calle.classList.remove('box__state-full')
+        if (calle.textContent === c) {
+            calle.classList.add('box__state-full')
+        }
 
-})
+    })
 }
 
 
