@@ -116,13 +116,23 @@
                         </table>
                     </div>
                     <div class="card-footer">
-                        <div class ="d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-row justify-content-between">
                             <div>
-                                <small class="text-muted"><button type="button"
+                                <small class="text-muted"><button type="button" id="descargarOrden"
                                         class="btn btn-primary btn-sm">Descargar</button>
-                                    <button type="button" id="cancelarOrden" class="btn btn-secondary btn-sm">Cancelar</button>
+                                    <button type="button" id="cancelarOrden"
+                                        class="btn btn-secondary btn-sm">Cancelar</button>
+                                </small>
                             </div>
-                            <button type="button" id="printButton" class="btn btn-secondary btn-sm"><i class="bi bi-printer"></i></button></small>
+                            <div class="button-panel">
+                                <button type="button" id="printButton" class="btn btn-secondary float-end"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Imprimir"><i
+                                        class="bi bi-printer"></i></button>
+                                <button type="button" id="excelExport" class="btn btn-secondary float-end"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Exportar Excel"><i
+                                        class="bi bi-file-earmark-spreadsheet"></i></button>
+                            </div>
+
                         </div>
                     </div>
                 </div>

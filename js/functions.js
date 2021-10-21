@@ -164,4 +164,4 @@ function printData() {
 }
 
 
-export { seleccionNivel, seleccionLadoProf, printData }
+export { seleccionNivel, seleccionLadoProf}

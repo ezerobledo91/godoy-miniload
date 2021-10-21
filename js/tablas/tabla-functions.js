@@ -163,7 +163,6 @@ function filtrosLoad(table, mesAtras) {
         setTimeout(function () {
             let dataObject = table.rows({ selected: true }).data() // array de objetos seleccionados (rows)
             let allData = table.rows().data()  // Todos los datos de la seleccion actual
-            console.log(allData)
             function seleccionSimple() {
                 dataObject.each(e => {
                     let valueOfDisponible = table.cell({ row: (e.id_), column: 10 }).data()  // celda seleccionada actual , columna 10 (disponible en stock)

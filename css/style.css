@@ -712,6 +712,14 @@ table th {
   pointer-events: none;
 }
 
+.button-panel {
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+  align-items: center;
+  float: right;
+}
+
 @media print {
   * {
     -webkit-print-color-adjust: exact;
@@ -728,6 +736,7 @@ table th {
     border: solid 1px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   .dataTable thead th {
@@ -756,7 +765,7 @@ table th {
     bottom: 0;
     text-align: left;
     left: 0;
-    width:100%;
-    display:block;
+    width: 100%;
+    display: block;
   }
 }

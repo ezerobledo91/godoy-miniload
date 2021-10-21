@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="./css/style.css">
     <link type="text/css" href="./DataTables/dataTables.checkboxes.css" rel="stylesheet" />
-
-
 </head>
 
 <body>
@@ -94,8 +92,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <button type="button" id="printButton" class="btn btn-secondary float-end"><i
-                            class="bi bi-printer"></i></button>
+                    <div class="button-panel">
+                        <button type="button" id="printButton" class="btn btn-secondary float-end"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Imprimir"><i
+                                class="bi bi-printer"></i></button>
+                        <button type="button" id="excelExport" class="btn btn-secondary float-end"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Exportar Excel"><i
+                                class="bi bi-file-earmark-spreadsheet"></i></button>
+                    </div>
+
                     <table id="procesada" class="display" style="width:100%">
 
                     </table>
@@ -109,7 +114,7 @@
             </div>
         </div>
     </div>
-    <script src="DataTables/datatables.min.js"></script>
+    <script type="text/javascript" src="DataTables/datatables.min.js"></script>
     <script type="text/javascript" src="DataTables/dataTables.checkboxes.min.js"></script>
     <script src="lib/popper.min.js"></script>
     <script src="lib/bootstrap.min.js"></script>

@@ -1,5 +1,5 @@
 import { nonSelect, filtrosLoad, groupCheck, enviarDatos } from './tabla-functions.js'
-import { printData } from '../tablas/print-exports.js'
+import { printData, exportTableToExcel } from '../tablas/print-exports.js'
 let mesAtras = `${(new Date(Date.now()).getFullYear())}-${(new Date(Date.now() - 30).getMonth()).toString().padStart(2, 0)}-01`
 $('#min').val(mesAtras)
 
@@ -157,6 +157,7 @@ function tablaPrincipal(URL, mesAtras) {
                 selector: 'tr:not(.no-select)'
             },
 
+
         });
 
         let table = $('#ordenes').DataTable();
@@ -282,8 +283,12 @@ $('#datos').on('click', function () {
 
     //------  Enviar Orden POST ---------------------
     $('#enviarDatos').on('click', function () { enviarDatos(data) })
-
 })
+
+
+$("#excelExport").on("click", function () {
+    exportTableToExcel("procesada")
+});
 
 
 $('#printButton').on('click', function () {
