@@ -7,7 +7,7 @@ $('#min').val(mesAtras)
 const URL = 'http://168.181.186.238:8080/pedidos'
 //http://bnbandeo.com.ar:8080/liberar
 //http://bnbandeo.com.ar:8080/liberartodas
-//http://168.181.186.238:8080/pedidos
+//http://168.181.186.238:8080/product/ROD17SKF8
 // ./pedidos/pedidos.json
 
 tablaPrincipal(URL, mesAtras)
@@ -96,7 +96,7 @@ function tablaPrincipal(URL, mesAtras) {
                 },
                 {
                     title: "Disponible en Deposito",
-                    data: "quantity",
+                    data: "stock",
                     render: {
                         display: function (data, type, row) {
                             // console.log(row.liberados)
@@ -113,7 +113,7 @@ function tablaPrincipal(URL, mesAtras) {
                 },
                 {
                     title: "Stock General",
-                    data: "quantity",
+                    data: "stock",
                     render: {
                         display: function (data, type, row) {
                             // console.log(row.liberados)
@@ -178,7 +178,22 @@ function tablaPrincipal(URL, mesAtras) {
 
 
     })
+
 }
+
+/*-------------------  Actualizar tabla - realizar la petición nuevamente ---------------- */
+
+$("#actualizar").on("click", function () {
+    let table = $('#ordenes').DataTable();
+    table.clear()
+    table.destroy();
+    document.querySelector("#ordenes").innerHTML = " "
+    document.querySelector(".container-table").innerHTML += `
+    <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;">
+     <span class="visually-hidden">Loading...</span>
+    </div>`
+    tablaPrincipal(URL, mesAtras)
+});
 
 
 /*-------------------  Dibujado de Tabla con Datos Seleccionadas MODAL ---------------- */
@@ -241,7 +256,7 @@ $('#datos').on('click', function () {
                 },
                 {
                     title: "Stock en Deposito",
-                    data: "quantity",
+                    data: "stock",
                     render: {
                         display: function (data, type, row) {
                             // console.log(row.liberados)

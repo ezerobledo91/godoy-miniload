@@ -3,7 +3,7 @@ import { printData, exportTableToExcel } from "../tablas/print-exports.js";
 // http://192.168.200.117:8080/pedidos
 
 
-export default function () {
+export default function createTable() {
     fetch('http://168.181.186.238:8080/pedidos/procesados/1').then(res => res.json()).then(resultado => {
         let table = new DataTable('#procesada', {
             paging: false,
@@ -75,6 +75,14 @@ $('#printButton').on('click', function () {
 $("#excelExport").on("click", function () {
     exportTableToExcel("procesada")
 });
+
+$("#actualizar").on("click", function () {
+    let table = $('#procesada').DataTable();
+    table.clear()
+    table.destroy();
+    createTable()
+});
+
 
 
 $('#cancelarOrden').on('click', function () {

@@ -1,0 +1,16 @@
+    [
+        {
+            "boxcod": 1226,
+            "boxdiv": 2,
+            "boxubic": 1,
+            "stock": 100,
+            "cerrada": true
+        },
+        {
+            "boxcod": 1225,
+            "boxdiv": 4,
+            "boxubic": 2,
+            "stock": 30,
+            "cerrada": true
+        }
+    ]

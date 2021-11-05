@@ -1,152 +1,20 @@
-       [
-       {
-            "id": 92743,
-            "cliente": "ALGODONERA AVELLANEDA",
+    [
+        {
             "codigo": "ROD30206SKF",
-            "nombre": "RODAMIENTO SKF",
-            "fecha": "2021/09/27",
-            "riesgo": "A",
-            "cantidad": "18"
+            "nombre": "30206 J2/Q",
+            "descripcion": "ROD RODILLOS CONICOS",
+            "stock_tot": 130
         },
         {
-            "id": 92743,
-            "cliente": "ALGODONERA AVELLANEDA",
             "codigo": "ROD32007SKF2",
             "nombre": "32007 X/Q",
-            "fecha": "2021/09/27",
-            "riesgo": "A",
-            "cantidad": "10"
+            "descripcion": "ROD RODILLOS CONICOS",
+            "stock_tot": 10
         },
         {
-            "id": 92743,
-            "cliente": "ALGODONERA AVELLANEDA",
-            "codigo": "ROD32206SKF2",
-            "nombre": "32206",
-            "fecha": "2021/09/27",
-            "riesgo": "A",
-            "cantidad": "15"
-        },
-        {
-            "id": 74627,
-            "cliente": "ARAUCO ARG SA - CELULOSA",
             "codigo": "ROD9378TMK2",
-            "nombre": "9378-70000",
-            "fecha": "2021/09/27",
-            "riesgo": "B",
-            "cantidad": "11"
-        },
-        {
-            "id": 90443,
-            "cliente": "CERVECERIA Y MALTERIA QUILMES",
-            "codigo": "ROD12SKF30",
-            "nombre": "LBBR 12-2LS",
-            "fecha": "2021/09/27",
-            "riesgo": "B",
-            "cantidad": "12"
-        },
-        {
-            "id": 90443,
-            "cliente": "CERVECERIA Y MALTERIA QUILMES",
-            "codigo": "ROD25SKF41",
-            "nombre": "LBBR 25-2LS",
-            "fecha": "2021/09/27",
-            "riesgo": "B",
-            "cantidad": "12"
-        },
-        {
-            "id": 90443,
-            "cliente": "CERVECERIA Y MALTERIA QUILMES",
-            "codigo": "ROD30207PEE",
-            "nombre": "PER.30207",
-            "fecha": "2021/09/27",
-            "riesgo": "B",
-            "cantidad": "16"
-        },
-        {
-            "id": 92116,
-            "cliente": "CERVECERIA Y MALTERIA QUILMES",
-            "codigo": "SEL30SKF15",
-            "nombre": "30X47X7 HMSA10 RG",
-            "fecha": "2021/09/27",
-            "riesgo": "B",
-            "cantidad": "10"
-        },
-        {
-            "id": 90443,
-            "cliente": "CERVECERIA Y MALTERIA QUILMES",
-            "codigo": "SEL65SKF36",
-            "nombre": "65X90X10 HMS5 RG",
-            "fecha": "2021/09/27",
-            "riesgo": "B",
-            "cantidad": "12"
-        },
-        {
-            "id": 93154,
-            "cliente": "COMPAÑIA INVERSORA INDUSTRIAL S.A.",
-            "codigo": "LUB18SKF14",
-            "nombre": "LGWA 2M/18",
-            "fecha": "2021/09/27",
-            "riesgo": "C",
-            "cantidad": "20"
-        },
-        {
-            "id": 93327,
-            "cliente": "CORRUGADORA DEL NORTE SA",
-            "codigo": "PHC50SKF41",
-            "nombre": "PHC 50-3X10FT",
-            "fecha": "2021/09/30",
-            "riesgo": "A",
-            "cantidad": "21"
+            "nombre": "937870000",
+            "descripcion": "ROD RODILLOS CONICOS",
+            "stock_tot": 0
         }
-        ,
-        {
-            "id": 93297,
-            "cliente": "LA MORALEJA S.A.",
-            "codigo": "ROD22217TMK7",
-            "nombre": "22217KEJW33",
-            "fecha": "2021/09/30",
-            "riesgo": "B",
-            "cantidad": "2"
-        },
-        {
-            "id": 93297,
-            "cliente": "LA MORALEJA S.A.",
-            "codigo": "ROD22312TMK3",
-            "nombre": "22312EJW33",
-            "fecha": "2021/09/30",
-            "riesgo": "B",
-            "cantidad": "4"
-        },
-        {
-            "id": 89593,
-            "cliente": "LEDESMA S.A.A.I. AZUCAR",
-            "codigo": "ROD30230SKF",
-            "nombre": "30230",
-            "fecha": "2021/09/24",
-            "riesgo": "B",
-            "cantidad": "10"
-        },
-        {
-            "id": 89593,
-            "cliente": "LEDESMA S.A.A.I. AZUCAR",
-            "codigo": "ROD30308TMK2",
-            "nombre": "30308M-90KM1",
-            "fecha": "2021/09/24",
-            "riesgo": "B",
-            "cantidad": "15"
-        },
-        {
-            "id": 89593,
-            "cliente": "LEDESMA S.A.A.I. AZUCAR",
-            "codigo": "ROD30308TMK2",
-            "nombre": "30308M-90KM1",
-            "fecha": "2021/09/24",
-            "riesgo": "B",
-            "cantidad": "15"
-        }
-
-
-
-
     ]
-

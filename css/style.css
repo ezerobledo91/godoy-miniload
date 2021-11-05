@@ -632,22 +632,30 @@ button:focus {
 }
 
 .caja__superior {
-  border: solid 10px rgb(11, 69, 134);
-  height: 150px;
-  border-radius: 5px;
+  height: 160px;
   width: 280px;
-  background: #0b458626;
+  background: url("../assets/cajonBox.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 290px 170px;
+  padding: 13px 35px;
+  color: #fff;
 }
 
-.caja__seccion {
-  border: 7px solid black;
-  height: 210px;
-  width: 25%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
+#gavetaDraw .col{
+ cursor: pointer; 
 }
+
+#gavetaDraw .col:hover{
+  background: #86b7fe;
+  transition: background 0.5s;
+}
+
+#gavetaDraw .col.selected-cell{
+  background: #86b7fe;
+}
+
+
 
 .cajas__superior-contenedor {
   display: flex;
@@ -664,7 +672,7 @@ button:focus {
   justify-content: center;
 }
 
-.card.dataTable td {
+.card-body table.dataTable td {
   font-size: 12px;
 }
 
@@ -672,8 +680,9 @@ button:focus {
   font-size: 14px;
 }
 
-.card .dataTable thead th {
+.card-body table.dataTable thead th {
   padding: 0;
+  font-size: 12px;
 }
 thead,
 tbody,
@@ -715,10 +724,50 @@ table th {
 .button-panel {
   display: flex;
   justify-content: space-between;
-  width: 100px;
+  width: 150px;
   align-items: center;
   float: right;
 }
+
+.section_nav {
+  width: 900px;
+}
+
+#boxInf {
+  display: flex;
+  gap: 10px;
+  min-height: 120px;
+}
+
+.gavetas-select-ok {
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
+
+.gavetas-select {
+  cursor: pointer;
+}
+
+.gavetas-select:hover {
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
+
+.btn__edit-table {
+  cursor: pointer;
+}
+.btn__edit-table:hover {
+  color: #0d6efd;
+}
+.btn__clear-table {
+  cursor: pointer;
+}
+.btn__clear-table:hover {
+  color: #b80e0e;
+}
+
 
 @media print {
   * {

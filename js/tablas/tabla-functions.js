@@ -80,17 +80,7 @@ function filtrosLoad(table, mesAtras) {
     /*-------------------  filtro cliente ---------------- */
     let filterCliente = "#filter-cliente"
     count(table.columns(2).data().eq(0).sort(), filterCliente)
-    // table
-    //     .columns(2)
-    //     .data()
-    //     .eq(0)      // Reduce the 2D array into a 1D array of data
-    //     .sort()       // Sort data alphabetically
-    //     .unique()  // Reduce the 2D array into a 1D array of data
-    //     .each(function (value, index) {
-    //         $('#filter-cliente').append('<option>' + value + '</option>')
-    //     })
-
-    $('#filter-cliente').on('change', function () {
+     $('#filter-cliente').on('change', function () {
         table.columns(2).search(this.value.replace(/ *\([^)]*\) */g, "")).draw();
     });
     /*-------------------  filtro código (count cuenta los repetidos en array) ------- */

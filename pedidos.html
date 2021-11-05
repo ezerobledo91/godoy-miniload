@@ -60,6 +60,11 @@
                             data-bs-toggle="tooltip" title="Limpiar Filtros"><i class="bi bi-trash"></i></button>
                     </div>
                     <div class="col-auto d-flex align-items-end">
+                        <button type="button" id="actualizar" class="btn btn-secondary float-end"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Actualizar"><i
+                                class="bi bi-arrow-clockwise"></i></button>
+                    </div>
+                    <div class="col-auto d-flex align-items-end">
                         <span data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             <button type="button" id="datos" class="btn btn-primary" data-bs-toggle="tooltip"
                                 data-bs-placement="top" title="Procesar Pedido">
@@ -92,13 +97,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="button-panel">
+                    <div class="button-panel" style="width: 100px;">
                         <button type="button" id="printButton" class="btn btn-secondary float-end"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Imprimir"><i
                                 class="bi bi-printer"></i></button>
-                        <button type="button" id="excelExport" class="btn btn-secondary float-end"
+                        <button type="button" id="excelExport" class="btn btn-secondary float-end btn-success"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Exportar Excel"><i
                                 class="bi bi-file-earmark-spreadsheet"></i></button>
+
                     </div>
 
                     <table id="procesada" class="display" style="width:100%">
